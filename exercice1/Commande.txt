@@ -1,0 +1,5 @@
+Commande pour lancer le build :
+docker build -t msg_image
+
+Commande pour monter un volume et lancer le conteneur :
+docker run -v .\volume:/opt/ msg_image

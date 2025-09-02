@@ -1,0 +1,24 @@
+Chemin du dossier contenant les données de la base :
+/var/lib/postgresql/data
+
+Commande à executer pour rentrer dans les conteneurs :
+docker exec -it <nom_du_conteneur> bash
+
+Vérifier que les données sont persistentes :
+Lancer dans le conteneur :
+psql -U john -d doe
+
+Puis créer la table utilisateurs avec un utilisateurs :
+CREATE TABLE utilisateurs (
+    id SERIAL PRIMARY KEY,
+    nom TEXT,
+    email TEXT
+);
+
+INSERT INTO utilisateurs (nom, email) VALUES ('Theo', 'theo@example.com');
+
+Vérifier que l'utilisateur est bien inséré :
+SELECT * FROM utilisateurs;
+
+Arrêter puis relancer les conteneurs, puis vérifier que la table utilisateurs avec la ligne
+insérée n'est pas effacée sur les conteneurs 2 et 3.

@@ -1,0 +1,8 @@
+Commande pour lancer le build :
+docker build -t node_image
+
+Commande pour monter un volume et lancer le conteneur :
+docker run --rm -p 3030:3030 node_image
+
+Après, on se connecte avec l'adresse :
+http://localhost:3030

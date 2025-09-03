@@ -1,0 +1,13 @@
+Créer un réseau docker :
+docker network create my-network
+
+Créer un conteneur connecté au réseau :
+docker run --rm --name postgres --env-file .\env.txt --network my-network -d postgres
+
+Créer un second conteneur connecté au réseau :
+docker run --rm --name client1 --network my-network -it ex4_postgres
+
+Créer un troisième conteneur non connecté au réseau :
+docker run --rm --name client2 -it ex4_postgres
+
+

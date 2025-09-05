@@ -1,0 +1,25 @@
+services:
+  postgres:
+    env_file: 
+     - .env
+     - db_password.txt
+    image: postgres
+  postgres_syst_part:
+    env_file:
+     - .env
+     - db_password.txt
+    image: postgres
+    volumes:
+      - ./data:/var/lib/postgresql/data
+
+  postgres_vol_docker:
+    env_file:
+     - .env
+     - db_password.txt
+    image: postgres
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+volumes:
+  pgdata:
+

@@ -1,5 +1,7 @@
 services:
   exo1:
     build:
-      dockerfile: image/Dockerfile
+      context: ./image
     image: exo1_image
+    volumes:
+      - ./msg.txt:/opt/msg.txt

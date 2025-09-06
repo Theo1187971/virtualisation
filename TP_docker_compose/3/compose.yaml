@@ -2,12 +2,18 @@ services:
   postgres:
     env_file: 
      - .env
-     - db_password.txt
+    environment:
+      POSTGRES_PASSWORD_FILE: /run/secrets/db_password
+    secrets:
+      - db_password
     image: postgres
   postgres_syst_part:
     env_file:
      - .env
-     - db_password.txt
+    environment:
+      POSTGRES_PASSWORD_FILE: /run/secrets/db_password
+    secrets:
+      - db_password
     image: postgres
     volumes:
       - ./data:/var/lib/postgresql/data
@@ -15,11 +21,18 @@ services:
   postgres_vol_docker:
     env_file:
      - .env
-     - db_password.txt
+    environment:
+      POSTGRES_PASSWORD_FILE: /run/secrets/db_password
+    secrets:
+      - db_password
     image: postgres
     volumes:
       - pgdata:/var/lib/postgresql/data
 
 volumes:
   pgdata:
+
+secrets:
+  db_password:
+    file: db_password.txt
 

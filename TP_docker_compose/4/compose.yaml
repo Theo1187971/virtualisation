@@ -1,0 +1,36 @@
+secrets:
+  db_password:
+    file: db_password.txt
+
+services:
+  postgres_client:
+    image: postgres
+    env_file: 
+      - .env
+    environment:
+      POSTGRES_PASSWORD_FILE: /run/secrets/db_password
+    secrets:
+      - db_password
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $POSTGRES_USER -d $POSTGRES_DB"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  client1:
+    build: 
+      context: ./debian_psql
+      dockerfile: Dockerfile
+    image: postgres_client
+    env_file:
+      - .env
+    secrets:
+      - db_password
+    depends_on:
+      postgres_client:
+        condition: service_healthy
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_DB: ${POSTGRES_DB}
+    command: >
+      sh -c "export PGPASSWORD=$(cat /run/secrets/db_password); psql -h postgres_client -U $POSTGRES_USER -d $POSTGRES_DB -c 'SELECT 1'"

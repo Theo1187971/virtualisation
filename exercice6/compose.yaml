@@ -1,0 +1,30 @@
+
+services:
+  mongodb:
+    image: mongodb/mongodb-community-server
+    environment:
+      MONGODB_USER: "testuser"
+      MONGODB_PASSWORD: "testpassword"
+      MONGODB_HOST: "testhost"
+
+  # webapp-1:
+  #   image: webapp-1:latest
+  #   ports:
+  #     - "127.0.0.1:8080:8080"
+  #   environment:
+  #     MONGODB_USER: "testuser"
+  #     MONGODB_PASSWORD: "testpassword"
+  #     MONGODB_HOST: "testhost"
+  #   depends_on:
+  #     - mongodb
+
+  webapp-2:
+    image: webapp-2:latest
+    ports:
+      - "127.0.0.1:9090:8080"
+    environment:
+      MONGODB_USER: "testuser"
+      MONGODB_PASSWORD: "testpassword"
+      MONGODB_HOST: "testhost"
+    depends_on:
+      - mongodb

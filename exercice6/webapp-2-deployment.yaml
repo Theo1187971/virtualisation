@@ -1,0 +1,47 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: C:\kompose\kompose.exe convert
+    kompose.version: 1.37.0 (fb0539e64)
+  labels:
+    io.kompose.service: webapp-2
+  name: webapp-2
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      io.kompose.service: webapp-2
+  template:
+    metadata:
+      annotations:
+        kompose.cmd: C:\kompose\kompose.exe convert
+        kompose.version: 1.37.0 (fb0539e64)
+      labels:
+        io.kompose.service: webapp-2
+    spec:
+      containers:
+        - env:
+            - name: MONGODB_DATABASE
+              value: admin
+            - name: MONGODB_HOST
+              value: mongodb
+            - name: MONGODB_PASSWORD
+              value: mypassword
+            - name: MONGODB_USER
+              value: myuser
+          image: webapp-2:latest
+          imagePullPolicy: Never
+
+          name: webapp-2
+          ports:
+            - containerPort: 8080
+              protocol: TCP
+
+          readinessProbe:
+            httpGet:
+              path: /
+              port: 8080
+            initialDelaySeconds: 10
+            periodSeconds: 5
+      restartPolicy: Always
